@@ -47,7 +47,7 @@ const MyBootstrapTable = ({className, header, tabledata, pagesize=0, paginations
     setTableData(table);
     setShowPagination((totalPages > 1));  
 
-    if(totalPages === 0)
+    if(totalPages === 1)
        return;
 
     /**
