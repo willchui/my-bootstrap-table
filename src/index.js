@@ -43,7 +43,6 @@ const MyBootstrapTable = ({className, header, tabledata, pagesize=0, paginations
     const offset = activePage * pagesize;
     const table = (pagesize === 0) ? tabledata : tabledata.slice(offset).slice(0, pagesize);
     const totalPages = Math.ceil(tabledata.length / pagesize)|0;
-    
     setTableData(table);
     setShowPagination((totalPages > 1));  
 
@@ -54,8 +53,8 @@ const MyBootstrapTable = ({className, header, tabledata, pagesize=0, paginations
      * Create pagination buttons and the button of prev and last.
      */
     const paginationOffset = Math.floor(activePage/paginationsize);
-    let paginationBtns = [...Array(paginationsize).keys()].map(x=>((x+1+(paginationOffset * paginationsize))));
-    paginationBtns = paginationBtns.filter((x)=>(x<=totalPages));
+    let paginationBtns = [...Array.from(Array(paginationsize), (x,i)=>i)].map(x=>((x+1+(paginationOffset * paginationsize))));
+    paginationBtns = paginationBtns.filter((x)=> {return x<=totalPages;});
     const firstItem = paginationBtns[0];
     const lastItem = paginationBtns.slice(-1)[0];
     setShowPrev((firstItem !== 1));
