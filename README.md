@@ -13,6 +13,7 @@ npm install --save @willchui/my-bootstrap-table
 ## Usage
 
 ```jsx
+
 import React from 'react';
 import MyBootstrapTable from '@willchui/my-bootstrap-table';
 import '@willchui/my-bootstrap-table/dist/index.css';
@@ -47,6 +48,37 @@ const App = () => {
     ];                  
   return <MyBootstrapTable className="m-3"  header={header} tabledata={tabledata} paginationsize={5} pagesize={10} ></MyBootstrapTable>
 }
+
+export default App
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> .theirs
 ```
 
 ## License
