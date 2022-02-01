@@ -1,6 +1,6 @@
 {
   "name": "@willchui/my-bootstrap-table",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Bootstrap table with paging that using boostrap pagination",
   "author": "William Chui",
   "license": "MIT",
