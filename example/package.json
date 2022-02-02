@@ -16,7 +16,8 @@
     "react": "file:../node_modules/react",
     "react-bootstrap": "^2.1.2",
     "react-dom": "file:../node_modules/react-dom",
-    "react-scripts": "file:../node_modules/react-scripts"
+    "react-scripts": "file:../node_modules/react-scripts",
+    "react-bootstrap-icons":"file:../node_modules/react-bootstrap-icons"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
