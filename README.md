@@ -1,6 +1,6 @@
 # @willchui/my-bootstrap-table
 
-> Bootstrap table with paging that using boostrap pagination
+> MyBootstrapTable component is sortable with pagination table, it is base on React Bootstrap Table and Pagination version 5.1.
 
 [![NPM](https://img.shields.io/npm/v/@willchui/my-bootstrap-table.svg)](https://www.npmjs.com/package/@willchui/my-bootstrap-table) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -16,15 +16,13 @@ npm install --save @willchui/my-bootstrap-table
 
 import React from 'react';
 import MyBootstrapTable from '@willchui/my-bootstrap-table';
-import '@willchui/my-bootstrap-table/dist/index.css';
-
 
 const App = () => {
-  const header = {'datetime': {'title': 'Date', 'width': '200px', 'sortable':true},
-                  'userId': {'title': 'User ID', 'width': '80px', 'sortable':false},
+  const header = {'datetime': {'title': 'Date', 'width': '200px', 'sortable':true, 'hide': false},
+                  'userId': {'title': 'User ID', 'width': '80px', 'sortable':false, 'hide': true},
                   'id': {'title':'ID', 'width': '60px' , 'sortable':true},
-                  'title': {'title':'Description', 'sortable':true}, 
-                  'completed': {'title':'Is Complete', 'width': '200px', 'sortable':true}};
+                  'title': {'title':'Description', 'sortable':false}, 
+                  'completed': {'title':'Complete', 'width': '200px', 'sortable':true}};
   const tabledata = [
     { "datetime": "12/25/2021 10:14:02 AM", "userId": 1, "id": 1, "title": "delectus aut autem", "completed": false },
     { "datetime": "12/24/2021 10:12:02 AM", "userId": 1, "id": 2, "title": "quis ut nam facilis et officia qui", "completed": false },
@@ -35,17 +33,7 @@ const App = () => {
     { "datetime": "12/24/2021 10:08:52 AM", "userId": 1, "id": 7, "title": "illo expedita consequatur quia in", "completed": false },
     { "datetime": "12/24/2021 10:08:59 AM", "userId": 1, "id": 8, "title": "quo adipisci enim quam ut ab", "completed": true },
     { "datetime": "12/24/2021 10:08:03 AM", "userId": 1, "id": 9, "title": "molestiae perspiciatis ipsa", "completed": false },
-    { "datetime": "12/23/2021 09:14:08 PM", "userId": 1, "id": 10, "title": "illo est ratione doloremque quia maiores aut", "completed": true },
-    { "datetime": "12/22/2021 08:04:07 AM", "userId": 1, "id": 11, "title": "vero rerum temporibus dolor", "completed": true },
-    { "datetime": "12/21/2021 08:24:03 AM", "userId": 1, "id": 12, "title": "ipsa repellendus fugit nisi", "completed": true },
-    { "datetime": "12/21/2021 07:32:09 AM", "userId": 1, "id": 13, "title": "et doloremque nulla", "completed": false },
-    { "datetime": "12/20/2021 06:22:05 PM", "userId": 1, "id": 14, "title": "repellendus sunt dolores architecto voluptatum", "completed": true },
-    { "datetime": "12/20/2021 05:11:22 AM", "userId": 1, "id": 15, "title": "ab voluptatum amet voluptas", "completed": true },
-    { "datetime": "12/19/2021 11:15:18 AM", "userId": 1, "id": 16, "title": "accusamus eos facilis sint et aut voluptatem", "completed": true },
-    { "datetime": "12/18/2021 10:52:15 AM", "userId": 1, "id": 17, "title": "quo laboriosam deleniti aut qui", "completed": true },
-    { "datetime": "12/17/2021 05:44:12 PM", "userId": 1, "id": 18, "title": "dolorum est consequatur ea mollitia in culpa", "completed": false },
-    { "datetime": "12/16/2021 03:33:02 AM", "userId": 1, "id": 19, "title": "molestiae ipsa aut voluptatibus pariatur dolor nihil", "completed": true },
-    { "datetime": "12/15/2021 01:32:01 PM", "userId": 1, "id": 20, "title": "ullam nobis libero sapiente ad optio sint", "completed": true }
+    { "datetime": "12/23/2021 09:14:08 PM", "userId": 1, "id": 10, "title": "illo est ratione doloremque quia maiores aut", "completed": true }
     ];                  
   return <MyBootstrapTable 
       classname="m-3" 
@@ -63,6 +51,95 @@ const App = () => {
 
 export default App
 ```
+
+## API Prop 
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>classname </td>
+      <td><div>string</div></td>
+      <td></td>
+      <td>
+      <div><p>The className of MyBootstrapTable container.</p></div></td>
+    </tr>
+    <tr>
+      <td >header</td>
+      <td><div>object</div></td>
+      <td></td>
+      <td><div><p>The structure looks like:<br><pre>
+{ 
+  column_num_1_key:
+  {
+    'title': (string)column_title,
+    'width': (string)css_width,
+    'sortable': (boolean)is_sortable,
+    'hide': (boolean)hide_column
+    },
+    column_num_x_key:{...}
+  ... 
+}</p></div></td>
+      </pre>
+    </tr>
+    <tr>
+      <td >tabledata</td>
+      <td><div>array</div></td>
+      <td></td>
+      <td><div><p>The structure looks like:<br><pre>
+[
+  {
+    column_num_1_key:(any),
+    column_nun_2_key:(any),
+    ...
+  },
+  ...
+]
+      </p></div></td>
+      </pre>
+    </tr>    
+    <tr>
+      <td >paginationsize </td>
+      <td ><div>number</div></td>
+      <td>5</td>
+      <td><div ><p>The number of pagination buttons.</p></div></td>
+    </tr>
+    <tr ><td >pagesize</td>
+    <td><div>number</div></td>
+    <td>0</td>
+    <td><div><p>The number of rows per page.</p></div></td></tr>
+    <tr><td>tableapi</td><td ><div>object</div></td><td></td>
+    <td><div><p>The structure looks like:<br><pre>
+{
+  'bordered': (boolean),
+  'borderless': (boolean), 
+  'hover': (boolean), 
+  'responsive': (string|boolean),
+  'size': (string),
+  'striped': (boolean),
+  'bsPrefix': (string)
+}
+</pre</p>
+<p>Please see the <a href='https://react-bootstrap.github.io/components/table'>https://react-bootstrap.github.io/components/table</a> API for more detials.</p></div></td></tr>
+    <tr><td >paginationapi </td><td ><div>object</div></td><td><code ></code></td><td><div ><p>The structure looks like:<br><pre>
+{
+  'size': (string),
+  'bsPrefix': (string)
+}
+</pre</p>
+<p>Please see the <a href='https://react-bootstrap.github.io/components/pagination'>https://react-bootstrap.github.io/components/pagination</a> API for more detials.</p></div></td></tr>
+    
+</tbody></table>
+
+## MyBootstrapTable Demo
+Quick Demo in <a href="https://stackblitz.com/edit/react-mybootstrap-table-demo?file=src%2FApp.js">Stackblitz</a>.
 
 ## License
 

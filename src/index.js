@@ -110,7 +110,6 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
         }
         else {
           /** Date sort. */
-          console.log("Date Sort==>" + f[key].toString());
           const firstDate = new Date(f[key].toString()).getTime();
           const secondDate = new Date(s[key].toString()).getTime();
           return firstDate > secondDate ? (isDesc?1:-1) : (isDesc?-1:1); 
@@ -141,14 +140,22 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
             header?
               <thead>
                   <tr> {                    
-                      Object.keys(header).map((k, index)=>(
-                          <th className="text-nowrap" key={index} width={header[k].width?header[k].width:'auto'}>
-                            <div onClick={sortHandle} data-id={k} className={header[k].sortable?style.header_sort_control:''}>
-                                {header[k].title}
-                                {!isDesc?<CaretUpFill className="ms-2" size={12} className={currentSortID != k?'d-none':''} /> :
-                                        <CaretDownFill className="ms-2" size={12} className={currentSortID != k?'d-none':''} />}
-                            </div>
-                          </th>
+                      Object.keys(header).map((k, index)=>(                          
+                            header[k].hide?'':
+                            <th className="text-nowrap" key={index} width={header[k].width?header[k].width:'auto'}>
+                              {
+                              header[k].sortable?                              
+                              <div onClick={sortHandle} data-id={k} className={style.header_sort_control}>
+                                  {header[k].title}
+                                  {                                     
+                                    (currentSortID !== k)?'' : 
+                                    (!isDesc?<CaretUpFill className="ms-2" size={12} /> :
+                                     <CaretDownFill className="ms-2" size={12} />)
+                                  }
+                              </div>
+                              : header[k].title
+                              }
+                            </th>
                       ))
                   }
                   </tr>
@@ -160,6 +167,7 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
                   <tr key={index}>
                       {
                           Object.keys(data).map((k, index)=>(
+                              header[k].hide?'':
                               <td key={index+1}>{data[k].toString()}</td>
                           ))
                       }

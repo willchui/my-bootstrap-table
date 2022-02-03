@@ -4,11 +4,11 @@ import '@willchui/my-bootstrap-table/dist/index.css';
 import tabledata from './sample-data.json';
 
 const App = () => {
-  const header = {'datetime': {'title': 'Date', 'width': '200px', 'sortable':true},
-                  'userId': {'title': 'User ID', 'width': '80px', 'sortable':false},
-                  'id': {'title':'ID', 'width': '60px' , 'sortable':true},
+  const header = {'datetime': {'title': 'Date', 'width': '200px', 'sortable':true, 'hide': false},
+                  'userId': {'title': 'User ID', 'width': '80px', 'sortable':false, 'hide': true},
+                  'id': {'title':'ID', 'width': '60px', 'sortable':true},
                   'title': {'title':'Description', 'sortable':true}, 
-                  'completed': {'title':'Is Complete', 'width': '200px', 'sortable':true}};
+                  'completed': {'title':'Complete', 'width': '200px', 'sortable':true}};
   return <MyBootstrapTable classname="m-3" 
       header={header} 
       tabledata={tabledata} 
