@@ -199,8 +199,8 @@ MyBootstrapTable.propTypes = {
   'pagesize': PropTypes.number,
   'paginationsize': PropTypes.number,
   'tabledata': PropTypes.array.isRequired,
-  'paginationclass': PropTypes.string,
-  'tableclass': PropTypes.string
+  'paginationapi': PropTypes.string,
+  'tableapi': PropTypes.string
 }
 
 

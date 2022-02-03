@@ -139,6 +139,7 @@ export default App
 </tbody></table>
 
 ## MyBootstrapTable Demo
+
 Quick Demo in <a href="https://stackblitz.com/edit/react-mybootstrap-table-demo?file=src%2FApp.js">Stackblitz</a>.
 
 ## License

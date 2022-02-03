@@ -1,6 +1,6 @@
 {
   "name": "@willchui/my-bootstrap-table",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Bootstrap table with paging that using boostrap pagination",
   "author": "William Chui",
   "license": "MIT",
@@ -56,5 +56,13 @@
     "prop-types": "^15.8.1",
     "react-bootstrap": "^2.1.2",
     "react-bootstrap-icons": "^1.7.2"
-  }
+  },
+  "keywords": [
+    "React",
+    "React Bootstrap",
+    "React Bootstrap Table",
+    "React Bootstrap Pagination",
+    "Table",
+    "Pagination"
+  ]
 }
