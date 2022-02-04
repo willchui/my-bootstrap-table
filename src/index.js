@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 import * as React from 'react';
-import {useState, useEffect} from 'react';
-import { Table, Pagination } from 'react-bootstrap';
-import PropTypes from 'prop-types';
+import {useState, useEffect, useRef} from 'react';
+import { Table, Pagination} from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import PropTypes, { bool, object } from 'prop-types';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { CaretUpFill, CaretDownFill } from 'react-bootstrap-icons';
@@ -19,24 +20,32 @@ import style from './styles.module.css';
  * const tabledata = [{'id_key': 123, 'username_key': 'Jimmy'}];
  * const pagesize = 20;
  * const paginationsize = 5;
- * 
+ * const tableapi={'bordered': true, 'borderless': false, 'hover': false, 'responsive': true, 'size': 'sm', 'striped': true};
+ * const paginationapi={'size': 'sm', 'bsPrefix': 'pagination justify-content-end'};
+ * const rowselectapi={'enable': true, 'rowselected': callback_function};
  * return (
  *   <MyBootstrapTable header={header} tabledata={tabledata} pagesize={pagesize} paginationsize={paginationsize} />
  * )
  */
-const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginationsize=5, paginationapi={}, tableapi={}}) =>{
+const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginationsize=5, 
+  paginationapi={}, tableapi={}, rowselectapi={}}) =>{
   
   const [paginationItems, setPaginationItems] = useState([]);
   const [currentPage, setCurrentPage]= useState(0);
   const [showPagination, setShowPagination] = useState(true);
 
-  const [tableData, setTableData] = useState([]);
+  const [tableDataUI, setTableDataUI] = useState([]);
+  
   const [showPrev, setShowPrev] = useState(false);
   const [showNext, setShowNext] = useState(false);
 
   const [currentSortID, setcurrentSortID] = useState("");
   const [isDesc, setDesc] = useState(false);
+  const [rowSelected, setRowSelected] = useState([]);
+  const [rowSelectedAll, setRowSelectedAll] = useState(false);
 
+  const myTableData = useRef([]);
+  
   /**
    * To implement pagination, and load the data in chucks.
    * @param {number} activePage The current active page number from pagination bar.
@@ -46,10 +55,12 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
      * To find out a chunk of current page data, or assign the data into table 
      * directly if the prop.pagesize is 0.
      */
+
     const offset = activePage * pagesize;
-    const table = (pagesize === 0) ? tabledata : tabledata.slice(offset).slice(0, pagesize);
-    const totalPages = Math.ceil(tabledata.length / pagesize)|0;
-    setTableData(table);
+    const table = (pagesize === 0) ? myTableData.current : myTableData.current.slice(offset).slice(0, pagesize);
+    
+    const totalPages = Math.ceil(myTableData.current.length / pagesize)|0;
+    setTableDataUI(table);
     setShowPagination((totalPages > 1));  
 
     if(totalPages === 1)
@@ -92,8 +103,10 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
        return;
 
     setcurrentSortID(key);
-    tabledata.sort((f, s) =>{
+    myTableData.current.sort((myF, myS) =>{
       /** Find out item type DateTime, String or number. */        
+      const f = myF[Object.keys(myF)[0]];
+      const s = myS[Object.keys(myS)[0]];
       const test = f[key].toString();
       if(isNaN(test)) {
         const isNotDate = isNaN(Date.parse(test));
@@ -123,8 +136,46 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
     showDataPage(currentPage);
   }
 
+  const selectAll = (e) =>{
+    if(!e.target.checked) {
+      setRowSelected([]); 
+    }
+    else {
+      setRowSelected([...myTableData.current])
+    }
+  }
+
+  const isSelected = (e)=>{
+    const key = e.target.dataset.id;
+    rowSelected.indexOf(key);
+    return true;
+  }
+
+  const selectRow = (e) =>{
+    setRowSelectedAll(true);
+    const key = e.target.dataset.id;
+   
+    if(!e.target.checked) {
+      const index = rowSelected.indexOf(key);
+      if (index > -1) {
+        rowSelected.splice(index, 1); 
+      }
+    }
+    else {
+      rowSelected.push(key);
+    }
+    setRowSelected([...rowSelected]);
+  }
+  
   useEffect(() => {
-    showDataPage(0)
+    /** Convert tabledata to myTableData
+     */
+    myTableData.current = tabledata.map((data, i)=>{        
+      const item = {};
+      item[i] = data;
+      return item;
+    });
+    showDataPage(currentPage);
   }, [tabledata])
 
   return (
@@ -139,7 +190,9 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
           {
             header?
               <thead>
-                  <tr> {                    
+                  <tr>                 
+                  {rowselectapi.enable?<th className={'text-center'}><Form.Check type="checkbox" onClick={selectAll}></Form.Check></th>:''}    
+                  {                                      
                       Object.keys(header).map((k, index)=>(                          
                             header[k].hide?'':
                             <th className="text-nowrap" key={index} width={header[k].width?header[k].width:'auto'}>
@@ -163,12 +216,18 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
             :''
           } 
           <tbody> {
-              tableData.map((data, index)=>(
+              tableDataUI.map((data, index)=>(
                   <tr key={index}>
+                      { rowselectapi.enable?<td key={index} className={"text-center"}>
+                        <Form.Check data-id={Object.keys(data)[0]} type="checkbox"
+                        checked={(rowSelected.indexOf(Object.keys(data)[0]) > -1)}
+                        onChange={selectRow}>
+                        </Form.Check></td>:''
+                      }  
                       {
-                          Object.keys(data).map((k, index)=>(
+                          Object.keys(data[Object.keys(data)[0]]).map((k, index)=>(
                               header[k].hide?'':
-                              <td key={index+1}>{data[k].toString()}</td>
+                              <td key={index+1}>{data[Object.keys(data)[0]][k].toString()}</td>
                           ))
                       }
                   </tr>
@@ -199,8 +258,8 @@ MyBootstrapTable.propTypes = {
   'pagesize': PropTypes.number,
   'paginationsize': PropTypes.number,
   'tabledata': PropTypes.array.isRequired,
-  'paginationapi': PropTypes.string,
-  'tableapi': PropTypes.string
+  'paginationapi': PropTypes.object,
+  'tableapi': PropTypes.object
 }
 
 

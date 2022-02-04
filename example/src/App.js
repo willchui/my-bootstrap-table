@@ -18,7 +18,8 @@ const App = () => {
       tableapi={{'bordered': true, 'borderless': false, 'hover': false, 
                  'responsive': true, 'size': 'sm', 'striped': true}}
       /** Please see the https://react-bootstrap.github.io/components/pagination API for more detials. */
-      paginationapi={{'size': 'sm', 'bsPrefix': 'pagination justify-content-end'}}>
+      paginationapi={{'size': 'sm', 'bsPrefix': 'pagination justify-content-end'}}
+      rowselectapi={{'enable':true}}>
 
   </MyBootstrapTable>
 }

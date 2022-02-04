@@ -144,4 +144,4 @@ Quick Demo in <a href="https://stackblitz.com/edit/react-mybootstrap-table-demo?
 
 ## License
 
-MIT © [William Chui](https://github.com/William Chui)
+MIT © [William Chui](https://github.com/willchui)
