@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@willchui/my-bootstrap-table": "file:..",
-    "bootstrap": "^5.1.3",
-    "prop-types": "^15.8.1",
+    "bootstrap": "file:../node_modules/bootstrap",
+    "prop-types": "file:../node_modules/prop-types",
     "react": "file:../node_modules/react",
-    "react-bootstrap": "^2.1.2",
+    "react-bootstrap": "file:../node_modules/react-bootstrap",
     "react-dom": "file:../node_modules/react-dom",
     "react-scripts": "file:../node_modules/react-scripts",
     "react-bootstrap-icons":"file:../node_modules/react-bootstrap-icons"

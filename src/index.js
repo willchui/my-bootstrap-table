@@ -137,18 +137,17 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
   }
 
   const selectAll = (e) =>{
+    let results;
     if(!e.target.checked) {
-      setRowSelected([]); 
+      results = [];
     }
     else {
-      setRowSelected([...myTableData.current])
+      results = [...myTableData.current.map((d)=>(Object.keys(d)[0]))];
     }
-  }
-
-  const isSelected = (e)=>{
-    const key = e.target.dataset.id;
-    rowSelected.indexOf(key);
-    return true;
+    setRowSelected(results); 
+    if(rowselectapi.callback) {
+      rowselectapi.callback(results);
+    }
   }
 
   const selectRow = (e) =>{
@@ -165,6 +164,9 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
       rowSelected.push(key);
     }
     setRowSelected([...rowSelected]);
+    if(rowselectapi.callback) {
+      rowselectapi.callback(rowSelected);
+    }
   }
   
   useEffect(() => {
@@ -259,7 +261,8 @@ MyBootstrapTable.propTypes = {
   'paginationsize': PropTypes.number,
   'tabledata': PropTypes.array.isRequired,
   'paginationapi': PropTypes.object,
-  'tableapi': PropTypes.object
+  'tableapi': PropTypes.object,
+  'rowselectapi': PropTypes.object
 }
 
 
