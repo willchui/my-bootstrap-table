@@ -177,6 +177,8 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
       item[i] = data;
       return item;
     });
+    setRowSelected([]);
+    setRowSelectedAll(false);
     showDataPage(currentPage);
   }, [tabledata])
 

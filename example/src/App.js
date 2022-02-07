@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import MyBootstrapTable from '@willchui/my-bootstrap-table';
 import '@willchui/my-bootstrap-table/dist/index.css';
-import tabledata from './sample-data.json';
+import tabledata_fromjson from './sample-data.json';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
 
 const App = () => {
   const [showResults, setshowResults] = useState("");
+  const [tabledata, settableData] = useState(tabledata_fromjson);
+  const [selectedRows, setSelectedRows] = useState([]);
 
   /** 
    * It will retrieve the selected rows number from the MyBootstrapTable component.
@@ -18,6 +21,17 @@ const App = () => {
          results += `${tabledata[d].id}, `;
     });
     setshowResults(results);
+    setSelectedRows(data);
+  };
+
+  const deleteRow = (e)=>{
+    selectedRows.forEach((d)=>{      
+      tabledata[d] = null;
+    });
+    const newArr = tabledata.filter((a) => a);
+    settableData([...newArr]);
+    setSelectedRows([]);
+    setshowResults("");
   };
   const header = {'datetime': {'title': 'Date', 'width': '200px', 'sortable':true, 'hide': false},
                   'userId': {'title': 'User ID', 'width': '80px', 'sortable':false, 'hide': true},
@@ -27,11 +41,10 @@ const App = () => {
   return <Container>
 
   <Row>
-  <div className={"d-flex"}>
-    <label>(Your selected rows): </label>
-    <textarea id="w3review" name="w3review" rows="2" cols="100" value={showResults}>
+    <label className={"text-nowrap"}>(Your selected rows): </label>
+    <textarea className={""} id="w3review" name="w3review" rows="2" cols="50" value={showResults}>
     </textarea>
-  </div>
+    <Button style={{width: "100px"}} onClick={deleteRow} disabled={!(selectedRows.length>0)}>Delete</Button>
   </Row>
   <Row>
   <MyBootstrapTable classname="m-3" 
