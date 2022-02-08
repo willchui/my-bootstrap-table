@@ -144,6 +144,7 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
     else {
       results = [...myTableData.current.map((d)=>(Object.keys(d)[0]))];
     }
+    setRowSelectedAll(e.target.checked);
     setRowSelected(results); 
     if(rowselectapi.callback) {
       rowselectapi.callback(results);
@@ -151,7 +152,6 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
   }
 
   const selectRow = (e) =>{
-    setRowSelectedAll(true);
     const key = e.target.dataset.id;
    
     if(!e.target.checked) {
@@ -178,6 +178,7 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
       return item;
     });
     setRowSelected([]);
+    debugger;
     setRowSelectedAll(false);
     showDataPage(currentPage);
   }, [tabledata])
@@ -195,7 +196,9 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
             header?
               <thead>
                   <tr>                 
-                  {rowselectapi.enable?<th className={'text-center'}><Form.Check type="checkbox" onClick={selectAll}></Form.Check></th>:''}    
+                  {rowselectapi.enable?<th className={'text-center'}>
+                    <Form.Check type="checkbox" checked={rowSelectedAll} onChange={selectAll}></Form.Check>
+                    </th>:''}    
                   {                                      
                       Object.keys(header).map((k, index)=>(                          
                             header[k].hide?'':
