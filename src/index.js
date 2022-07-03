@@ -178,7 +178,6 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
       return item;
     });
     setRowSelected([]);
-    debugger;
     setRowSelectedAll(false);
     showDataPage(currentPage);
   }, [tabledata])
@@ -224,7 +223,7 @@ const MyBootstrapTable = ({classname, header, tabledata, pagesize=0, paginations
           } 
           <tbody> {
               tableDataUI.map((data, index)=>(
-                  <tr key={index}>
+                  <tr key={index} style={{background: (rowSelected.indexOf(Object.keys(data)[0]) > -1)?"lightblue":"transparent"}}>
                       { rowselectapi.enable?<td key={index} className={"text-center"}>
                         <Form.Check data-id={Object.keys(data)[0]} type="checkbox"
                         checked={(rowSelected.indexOf(Object.keys(data)[0]) > -1)}
