@@ -169,7 +169,7 @@ export default App
 Quick Demo in <a href="https://stackblitz.com/edit/react-mybootstrap-table-demo?file=src%2FApp.js">Stackblitz</a>.
 - version 1.1.0 - An example of delete row.
 - version 1.1.1 - Implement a select all checkbox.
-
+- version 1.1.2 - Add a highlight on the selected row.
 ## License
 
 MIT © [William Chui](https://github.com/willchui)
